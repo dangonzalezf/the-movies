@@ -45,7 +45,7 @@ fun HomeScreen() {
     Screen {
         val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior() // change the toolbar color
         //val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior() // collapse the toolbar
-        TopBarScreen(scrollBehavior = scrollBehavior, title = "Movies App") { padding ->
+        TopBarScreen(scrollBehavior = scrollBehavior, title = "Movies App", navigationButton = null) { padding ->
             MovieGrid(padding)
         }
     }
