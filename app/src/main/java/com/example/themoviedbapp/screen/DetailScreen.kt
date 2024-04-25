@@ -16,13 +16,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.example.themoviedbapp.Movie
 import com.example.themoviedbapp.R
-import com.example.themoviedbapp.movies
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailScreen() {
-    val movie = movies[0]
+fun DetailScreen(movie: Movie, onBack: () -> Unit) {
     Screen {
         TopBarScreen(
             scrollBehavior = null,
@@ -31,12 +30,12 @@ fun DetailScreen() {
                 TopBarNavigationButton(
                     icon = Icons.AutoMirrored.Default.ArrowBack,
                     contentDescription = R.string.back,
-                    clickAction = {/*TODO*/}
+                    clickAction = ( onBack )
                 )
             }
         )
         { padding ->
-            Column (
+            Column(
                 modifier = Modifier
                     .padding(padding)
                     .verticalScroll(rememberScrollState())

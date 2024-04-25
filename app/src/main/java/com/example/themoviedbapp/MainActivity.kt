@@ -4,8 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.example.themoviedbapp.screen.DetailScreen
-import com.example.themoviedbapp.screen.HomeScreen
 
 class MainActivity : ComponentActivity() {
 
@@ -13,8 +11,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            HomeScreen()
-            //DetailScreen()
+            Navigation()
         }
     }
 }
