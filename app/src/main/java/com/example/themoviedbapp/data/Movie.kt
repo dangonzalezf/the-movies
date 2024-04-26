@@ -1,4 +1,4 @@
-package com.example.themoviedbapp
+package com.example.themoviedbapp.data
 
 data class Movie(
     val id: Int,

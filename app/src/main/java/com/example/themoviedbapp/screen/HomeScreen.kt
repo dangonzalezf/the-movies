@@ -32,7 +32,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
-import com.example.themoviedbapp.Movie
+import com.example.themoviedbapp.data.Movie
 import com.example.themoviedbapp.R
 import com.example.themoviedbapp.common.PermissionRequestEffect
 import com.example.themoviedbapp.common.getRegion

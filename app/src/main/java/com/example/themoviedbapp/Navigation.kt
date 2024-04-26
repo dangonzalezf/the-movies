@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.themoviedbapp.data.movies
 import com.example.themoviedbapp.screen.DetailScreen
 import com.example.themoviedbapp.screen.HomeScreen
 
