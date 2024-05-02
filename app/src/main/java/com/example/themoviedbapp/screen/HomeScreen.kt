@@ -19,11 +19,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -56,32 +52,30 @@ fun Screen(content: @Composable () -> Unit) {
 @Composable
 fun HomeScreen(onClick: (Movie) -> Unit, viewModel: HomeViewModel = viewModel()) {
     val context = LocalContext.current
-    val appName = stringResource(id = R.string.app_name)
-    var appBarTitle by remember { mutableStateOf(appName) }
     val coroutineScope = rememberCoroutineScope()
-    val state = viewModel.state
 
     PermissionRequestEffect(permission = Manifest.permission.ACCESS_COARSE_LOCATION) { granted ->
-        if (granted) {
-            coroutineScope.launch {
-                val region = context.getRegion()
-                appBarTitle = "$appName - $region"
-            }
-        } else {
-            appBarTitle = "$appName - Permission denied"
+
+        coroutineScope.launch {
+            val region = if (granted) context.getRegion() else "US"
+            viewModel.onUiReady(region)
         }
-        viewModel.onUiReady()
     }
-
     Screen {
-        val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior() // change the toolbar color
-        //val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior() // collapse the toolbar
-        TopBarScreen(scrollBehavior = scrollBehavior, title = appBarTitle, navigationButton = null) { padding ->
+        val state = viewModel.state
+        val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior() // change the toolbar color when the user scrolling
+        //val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior() // collapse the toolbar when the user scrolling
+        TopBarScreen(
+            scrollBehavior = scrollBehavior,
+            title = stringResource(id = R.string.app_name),
+            navigationButton = null
+        ) { padding ->
 
-            if(state.loading) {
-                Box(modifier = Modifier
-                    .fillMaxSize()
-                    .padding(padding),
+            if (state.loading) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(padding),
                     contentAlignment = Alignment.Center
                 ) {
                     CircularProgressIndicator()

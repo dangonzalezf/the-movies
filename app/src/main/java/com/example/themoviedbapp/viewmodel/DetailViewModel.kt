@@ -9,22 +9,22 @@ import com.example.themoviedbapp.data.Movie
 import com.example.themoviedbapp.data.MoviesRepository
 import kotlinx.coroutines.launch
 
-class HomeViewModel : ViewModel() {
+class DetailViewModel(private val movieId: Int) : ViewModel() {
+
+    private val repository = MoviesRepository()
 
     var state by mutableStateOf(UiState())
         private set
 
-    private val moviesRepository = MoviesRepository()
-
-    fun onUiReady(region: String) {
-        viewModelScope.launch {
-            state = UiState(loading = true)
-            state = UiState(loading = false, movies = moviesRepository.fetchPopularMovies(region))
-        }
-    }
-
     data class UiState(
         val loading: Boolean = false,
-        val movies: List<Movie> = emptyList(),
+        val movie: Movie? = null
     )
+
+    init {
+        viewModelScope.launch {
+            state = UiState(loading = true)
+            state = UiState(loading = false, repository.fetchMovieById(movieId))
+        }
+    }
 }
