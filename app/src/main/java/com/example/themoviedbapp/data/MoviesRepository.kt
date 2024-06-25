@@ -2,12 +2,12 @@ package com.example.themoviedbapp.data
 
 import com.example.themoviedbapp.data.model.toDomainModel
 
-class MoviesRepository {
+class MoviesRepository(private val regionRepository: RegionRepository) {
 
-    suspend fun fetchPopularMovies(region: String): List<Movie> =
+    suspend fun fetchPopularMovies(): List<Movie> =
         MoviesClient
             .instance
-            .fetchPopularMovies(region)
+            .fetchPopularMovies(regionRepository.findLastRegion())
             .remoteMovies.map { it.toDomainModel() }
 
     suspend fun fetchMovieById(id: Int): Movie =

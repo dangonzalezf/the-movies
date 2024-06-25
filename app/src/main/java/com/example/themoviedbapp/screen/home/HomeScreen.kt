@@ -1,5 +1,6 @@
 package com.example.themoviedbapp.screen.home
 
+import android.Manifest
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,18 +29,21 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.themoviedbapp.data.Movie
 import com.example.themoviedbapp.R
+import com.example.themoviedbapp.common.PermissionRequestEffect
 import com.example.themoviedbapp.screen.LoadingIndicator
 import com.example.themoviedbapp.screen.Screen
 import com.example.themoviedbapp.viewmodel.HomeViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(onClick: (Movie) -> Unit, vm: HomeViewModel = viewModel()) {
+fun HomeScreen(
+    onClick: (Movie) -> Unit,
+    vm: HomeViewModel
+) {
 
     val homeState = rememberHomeState()
-
-    homeState.AskRegionEffect {
-        vm.onUiReady(it)
+    PermissionRequestEffect(permission = Manifest.permission.ACCESS_COARSE_LOCATION) {
+        vm.onUiReady()
     }
 
     Screen {
