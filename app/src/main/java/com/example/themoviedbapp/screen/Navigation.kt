@@ -11,6 +11,9 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.themoviedbapp.data.MoviesRepository
 import com.example.themoviedbapp.data.RegionRepository
+import com.example.themoviedbapp.data.datasource.LocationDataSource
+import com.example.themoviedbapp.data.datasource.MoviesRemoteDataSource
+import com.example.themoviedbapp.data.datasource.RegionDataSource
 import com.example.themoviedbapp.screen.detail.DetailScreen
 import com.example.themoviedbapp.screen.home.HomeScreen
 import com.example.themoviedbapp.viewmodel.DetailViewModel
@@ -31,8 +34,10 @@ enum class NavArgs(val key: String) {
 fun Navigation() {
 
     val navController = rememberNavController()
+    val app = LocalContext.current.applicationContext as Application
     val moviesRepository = MoviesRepository(
-        RegionRepository(app = LocalContext.current.applicationContext as Application)
+        RegionRepository(RegionDataSource(app, LocationDataSource(app))),
+        MoviesRemoteDataSource()
     )
     NavHost(navController = navController, startDestination = NavScreen.Home.route) {
         composable(route = NavScreen.Home.route) {

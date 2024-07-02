@@ -13,16 +13,7 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
 import kotlin.coroutines.resume
 
-@SuppressLint("MissingPermission")
-suspend fun FusedLocationProviderClient.lastLocation(): Location? {
-    return suspendCancellableCoroutine { continuation ->
-        lastLocation.addOnSuccessListener { location ->
-            continuation.resume(location)
-        }.addOnFailureListener {
-            continuation.resume(null)
-        }
-    }
-}
+
 
 @Suppress("DEPRECATION")
 suspend fun Geocoder.getFromLocationCompat(
