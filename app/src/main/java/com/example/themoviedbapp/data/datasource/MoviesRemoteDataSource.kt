@@ -1,7 +1,7 @@
 package com.example.themoviedbapp.data.datasource
 
 import com.example.themoviedbapp.data.Movie
-import com.example.themoviedbapp.data.MoviesClient
+import com.example.themoviedbapp.data.remote.MoviesClient
 import com.example.themoviedbapp.data.model.RemoteMovie
 
 class MoviesRemoteDataSource {

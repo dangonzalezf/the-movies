@@ -1,7 +1,6 @@
-package com.example.themoviedbapp.data
+package com.example.themoviedbapp.data.remote
 
 import com.example.themoviedbapp.data.model.RemoteMovie
-import com.example.themoviedbapp.data.model.RemoteResult
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

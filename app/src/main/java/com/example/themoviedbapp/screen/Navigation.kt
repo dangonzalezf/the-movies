@@ -9,9 +9,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.themoviedbapp.App
 import com.example.themoviedbapp.data.MoviesRepository
 import com.example.themoviedbapp.data.RegionRepository
 import com.example.themoviedbapp.data.datasource.LocationDataSource
+import com.example.themoviedbapp.data.datasource.MoviesLocalDataSource
 import com.example.themoviedbapp.data.datasource.MoviesRemoteDataSource
 import com.example.themoviedbapp.data.datasource.RegionDataSource
 import com.example.themoviedbapp.screen.detail.DetailScreen
@@ -34,9 +36,10 @@ enum class NavArgs(val key: String) {
 fun Navigation() {
 
     val navController = rememberNavController()
-    val app = LocalContext.current.applicationContext as Application
+    val app = LocalContext.current.applicationContext as App
     val moviesRepository = MoviesRepository(
         RegionRepository(RegionDataSource(app, LocationDataSource(app))),
+        MoviesLocalDataSource(app.db.moviesDao()),
         MoviesRemoteDataSource()
     )
     NavHost(navController = navController, startDestination = NavScreen.Home.route) {

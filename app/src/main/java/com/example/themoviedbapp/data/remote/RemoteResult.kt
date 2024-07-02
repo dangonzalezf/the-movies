@@ -1,5 +1,6 @@
-package com.example.themoviedbapp.data.model
+package com.example.themoviedbapp.data.remote
 
+import com.example.themoviedbapp.data.model.RemoteMovie
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

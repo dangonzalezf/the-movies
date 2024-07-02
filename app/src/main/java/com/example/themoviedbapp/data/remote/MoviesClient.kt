@@ -1,4 +1,4 @@
-package com.example.themoviedbapp.data
+package com.example.themoviedbapp.data.remote
 
 import com.example.themoviedbapp.BuildConfig
 import kotlinx.serialization.json.Json
