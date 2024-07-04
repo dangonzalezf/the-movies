@@ -22,7 +22,9 @@ class DetailViewModel(
     init {
         viewModelScope.launch {
             _state.value = UiState(loading = true)
-            _state.value = UiState(loading = false, moviesRepository.fetchMovieById(movieId))
+            moviesRepository.fetchMovieById(movieId).collect { movie ->
+            _state.value = UiState(loading = false, movie = movie)
+            }
         }
     }
 

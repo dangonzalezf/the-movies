@@ -2,6 +2,8 @@ package com.example.themoviedbapp.data
 
 import com.example.themoviedbapp.data.datasource.MoviesLocalDataSource
 import com.example.themoviedbapp.data.datasource.MoviesRemoteDataSource
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.transform
 
 class MoviesRepository(
     private val regionRepository: RegionRepository,
@@ -9,20 +11,18 @@ class MoviesRepository(
     private val remoteDataSource: MoviesRemoteDataSource
 ) {
 
-    suspend fun fetchPopularMovies(): List<Movie> {
-        if (localDataSource.fetchPopularMovies().isEmpty()) {
-            val region = regionRepository.findLastRegion()
-            val movies = remoteDataSource.fetchPopularMovies(region)
-            localDataSource.saveMovies(movies)
+    val movies: Flow<List<Movie>> = localDataSource.movies.transform { localMovies ->
+        val movies = localMovies.takeIf { it.isNotEmpty() }
+            ?: remoteDataSource.fetchPopularMovies(regionRepository.findLastRegion()).also {
+            localDataSource.saveMovies(it)
         }
-        return localDataSource.fetchPopularMovies()
+        emit(movies)
     }
 
-    suspend fun fetchMovieById(id: Int): Movie {
-        if (localDataSource.findMovieById(id) == null) {
-            val movie = remoteDataSource.fetchMovieById(id)
+    suspend fun fetchMovieById(id: Int): Flow<Movie> = localDataSource.findMovieById(id).transform { localMovie ->
+        val movie = localMovie ?: remoteDataSource.fetchMovieById(id).also { movie ->
             localDataSource.saveMovies(listOf(movie))
         }
-        return checkNotNull(localDataSource.findMovieById(id))
+        emit(movie)
     }
 }
