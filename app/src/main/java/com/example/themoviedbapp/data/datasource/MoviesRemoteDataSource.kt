@@ -31,5 +31,6 @@ private fun RemoteMovie.toDomainModel(): Movie =
         overview = overview,
         originalLanguage = originalLanguage,
         originalTitle = originalTitle,
-        popularity = popularity
+        popularity = popularity,
+        favorite = false
     )

@@ -29,7 +29,11 @@ class DetailViewModel(
     }
 
     fun onFavoriteClick() {
-        _state.update { it.copy(message = "Favorite clicked") }
+        _state.value.movie?.let { movie ->
+            viewModelScope.launch {
+                moviesRepository.toggleFavorite(movie)
+            }
+        }
     }
 
     fun onMessageShown() {

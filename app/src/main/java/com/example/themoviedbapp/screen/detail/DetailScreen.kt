@@ -10,6 +10,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -64,9 +65,10 @@ fun DetailScreen(vm: DetailViewModel = viewModel(), onBack: () -> Unit) {
                 )
             },
             floatingActionButton = {
+                val favorite = state.movie?.favorite ?: false
                 FloatingActionButton(onClick = { vm.onFavoriteClick() }) {
                     Icon(
-                        imageVector = Icons.Default.FavoriteBorder,
+                        imageVector = if(favorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                         contentDescription = stringResource(id = R.string.favorite_button)
                     )
                 }
@@ -117,21 +119,4 @@ fun MovieDetail(movie: Movie?, padding: PaddingValues) {
         }
     }
 }
-
-// Channel: first way to get ui state that is execute once time.
-/*val lifeCycle = LocalLifecycleOwner.current
-
-LaunchedEffect(vm, lifeCycle) {
-    lifeCycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-        vm.events.collect { event ->
-            when (event) {
-                is DetailViewModel.UiEvent.ShowMessage -> {
-                    snackBarHostState.currentSnackbarData?.dismiss()
-                    snackBarHostState.showSnackbar(event.message)
-                }
-            }
-
-        }
-    }
-}*/
 
