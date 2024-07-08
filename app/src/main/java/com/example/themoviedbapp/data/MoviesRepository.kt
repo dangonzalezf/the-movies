@@ -19,7 +19,7 @@ class MoviesRepository(
         emit(movies)
     }
 
-    suspend fun fetchMovieById(id: Int): Flow<Movie> = localDataSource.findMovieById(id).transform { localMovie ->
+    fun fetchMovieById(id: Int): Flow<Movie> = localDataSource.findMovieById(id).transform { localMovie ->
         val movie = localMovie ?: remoteDataSource.fetchMovieById(id).also { movie ->
             localDataSource.saveMovies(listOf(movie))
         }

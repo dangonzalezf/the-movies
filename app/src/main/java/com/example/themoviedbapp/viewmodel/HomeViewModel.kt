@@ -4,23 +4,33 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.themoviedbapp.data.Movie
 import com.example.themoviedbapp.data.MoviesRepository
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 
 class HomeViewModel(private val moviesRepository: MoviesRepository) : ViewModel() {
 
-    private val _state: MutableStateFlow<UiState> = MutableStateFlow(UiState())
-    val state: StateFlow<UiState> get() = _state.asStateFlow()
+    private val uiReady = MutableStateFlow(false)
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val state: StateFlow<UiState> = uiReady
+        .filter { it } // No se ejecuta hasta que uiReady sea true
+        .flatMapLatest { moviesRepository.movies }
+        .map { UiState(movies = it) }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = UiState(loading = true)
+        )
 
     fun onUiReady() {
-        viewModelScope.launch {
-            _state.value = UiState(loading = true)
-            moviesRepository.movies.collect { movies ->
-                _state.value = UiState(loading = false, movies = movies)
-            }
-        }
+        uiReady.value = true
+
     }
 
     data class UiState(

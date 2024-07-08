@@ -44,11 +44,7 @@ fun DetailScreen(vm: DetailViewModel = viewModel(), onBack: () -> Unit) {
 
     val state by vm.state.collectAsState()
     val detailState = rememberDetailState()
-    
-    detailState.ShowMessageEffects(message = state.message) {
-        vm.onMessageShown()
-    }
-    
+
     Screen {
         Scaffold(
             topBar = {
@@ -68,7 +64,7 @@ fun DetailScreen(vm: DetailViewModel = viewModel(), onBack: () -> Unit) {
                 val favorite = state.movie?.favorite ?: false
                 FloatingActionButton(onClick = { vm.onFavoriteClick() }) {
                     Icon(
-                        imageVector = if(favorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                        imageVector = if (favorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                         contentDescription = stringResource(id = R.string.favorite_button)
                     )
                 }
