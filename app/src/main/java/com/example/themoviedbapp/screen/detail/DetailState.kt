@@ -5,9 +5,9 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
-
+import com.example.themoviedbapp.Result
+import com.example.themoviedbapp.data.Movie
 
 /**
  * This class is an state holder of ui created
@@ -15,27 +15,21 @@ import androidx.compose.runtime.remember
  */
 @OptIn(ExperimentalMaterial3Api::class)
 class DetailState(
+    private val state: Result<Movie>,
     val scrollBehavior: TopAppBarScrollBehavior,
-    val snackBarHostState: SnackbarHostState
+    val snackbarHostState: SnackbarHostState
 ) {
+    val movie: Movie?
+        get() = (state as? Result.Success)?.data
 
-    @Composable
-    fun ShowMessageEffects(message: String?, onMessageShown: () -> Unit) {
-        LaunchedEffect(message) {
-            message?.let {
-                snackBarHostState.currentSnackbarData?.dismiss()
-                snackBarHostState.showSnackbar(it)
-                onMessageShown()
-            }
-        }
-    }
+    val topBarTitle: String
+        get() = movie?.title ?: ""
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun rememberDetailState(
+    state: Result<Movie>,
     scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(),
-    snackBarHostState: SnackbarHostState = SnackbarHostState()
-): DetailState {
-    return remember(scrollBehavior, snackBarHostState) { DetailState(scrollBehavior = scrollBehavior, snackBarHostState = snackBarHostState) }
-}
+    snackbarHostState: SnackbarHostState = remember { SnackbarHostState() }
+) = remember(state) { DetailState(state, scrollBehavior, snackbarHostState) }

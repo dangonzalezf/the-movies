@@ -2,7 +2,6 @@ package com.example.themoviedbapp.screen.detail
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -15,15 +14,17 @@ import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.buildAnnotatedString
@@ -31,11 +32,10 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.themoviedbapp.R
+import com.example.themoviedbapp.common.AcScaffold
 import com.example.themoviedbapp.data.Movie
-import com.example.themoviedbapp.screen.LoadingIndicator
 import com.example.themoviedbapp.screen.Property
 import com.example.themoviedbapp.screen.Screen
-import com.example.themoviedbapp.screen.TopBarNavigationButton
 import com.example.themoviedbapp.viewmodel.DetailViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -43,25 +43,20 @@ import com.example.themoviedbapp.viewmodel.DetailViewModel
 fun DetailScreen(vm: DetailViewModel = viewModel(), onBack: () -> Unit) {
 
     val state by vm.state.collectAsState()
-    val detailState = rememberDetailState()
+    val detailState = rememberDetailState(state)
 
     Screen {
-        Scaffold(
+        AcScaffold(
+            state = state,
             topBar = {
-                TopAppBar(
-                    title = { Text(text = state.movie?.title ?: "") },
-                    navigationIcon = {
-                        TopBarNavigationButton(
-                            icon = Icons.AutoMirrored.Default.ArrowBack,
-                            contentDescription = R.string.back,
-                            clickAction = onBack
-                        )
-                    },
-                    scrollBehavior = detailState.scrollBehavior
+                DetailTopBar(
+                    title = detailState.topBarTitle,
+                    scrollBehavior = detailState.scrollBehavior,
+                    onBack = onBack
                 )
             },
             floatingActionButton = {
-                val favorite = state.movie?.favorite ?: false
+                val favorite = detailState.movie?.favorite ?: false
                 FloatingActionButton(onClick = { vm.onFavoriteClick() }) {
                     Icon(
                         imageVector = if (favorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
@@ -69,24 +64,43 @@ fun DetailScreen(vm: DetailViewModel = viewModel(), onBack: () -> Unit) {
                     )
                 }
             },
-            snackbarHost = {
-                SnackbarHost(
-                    hostState = detailState.snackBarHostState
-                )
-            }) { padding ->
-            LoadingIndicator(state.loading, padding)
-            MovieDetail(state.movie, padding)
+            snackBarHost = { SnackbarHost(hostState = detailState.snackbarHostState) },
+            modifier = Modifier.nestedScroll(detailState.scrollBehavior.nestedScrollConnection)
+        ) { padding, movies ->
+            MovieDetail(movies, Modifier.padding(padding))
         }
     }
 }
 
 @Composable
-fun MovieDetail(movie: Movie?, padding: PaddingValues) {
+@OptIn(ExperimentalMaterial3Api::class)
+private fun DetailTopBar(
+    title: String,
+    onBack: () -> Unit,
+    scrollBehavior: TopAppBarScrollBehavior
+) {
+    TopAppBar(
+        title = { Text(text = title) },
+        navigationIcon = {
+            IconButton(onClick = onBack) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Default.ArrowBack,
+                    contentDescription = stringResource(id = R.string.back)
+                )
+            }
+        },
+        scrollBehavior = scrollBehavior
+    )
+}
+
+@Composable
+fun MovieDetail(
+    movie: Movie?,
+    modifier: Modifier = Modifier
+) {
     movie?.let {
         Column(
-            modifier = Modifier
-                .verticalScroll(rememberScrollState())
-                .padding(padding)
+            modifier = modifier.verticalScroll(rememberScrollState())
         ) {
             AsyncImage(
                 model = it.backdrop,

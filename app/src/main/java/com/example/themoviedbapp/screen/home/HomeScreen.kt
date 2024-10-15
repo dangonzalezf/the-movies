@@ -34,9 +34,11 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.themoviedbapp.data.Movie
 import com.example.themoviedbapp.R
+import com.example.themoviedbapp.common.AcScaffold
 import com.example.themoviedbapp.common.PermissionRequestEffect
 import com.example.themoviedbapp.screen.LoadingIndicator
 import com.example.themoviedbapp.screen.Screen
+import com.example.themoviedbapp.stateAsResultIn
 import com.example.themoviedbapp.viewmodel.HomeViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -52,7 +54,9 @@ fun HomeScreen(
     }
 
     Screen {
-        Scaffold(
+        val state by vm.state.collectAsState()
+        AcScaffold(
+            state = state,
             topBar = {
                 TopAppBar(
                     title = { Text(stringResource(id = R.string.app_name)) },
@@ -63,10 +67,8 @@ fun HomeScreen(
                 homeState.scrollBehavior.nestedScrollConnection
             ),
             contentWindowInsets = WindowInsets.safeDrawing
-        ) { padding ->
-            val state by vm.state.collectAsState()
+        ) { padding, movies ->
 
-            LoadingIndicator(loadingState = state.loading, padding = padding)
             LazyVerticalGrid(
                 contentPadding = padding,
                 columns = GridCells.Adaptive(minSize = 120.dp),
@@ -74,7 +76,7 @@ fun HomeScreen(
                 verticalArrangement = Arrangement.spacedBy(4.dp),
                 modifier = Modifier.padding(4.dp)
             ) {
-                items(state.movies, key = { it.id }) { movie ->
+                items(movies, key = { it.id }) { movie ->
                     MovieItem(movie = movie, onClick = { onClick(movie) })
                 }
             }
@@ -99,7 +101,9 @@ fun MovieItem(movie: Movie, onClick: () -> Unit) {
                     imageVector = Icons.Default.Favorite,
                     contentDescription = stringResource(id = R.string.favorite_button),
                     tint = MaterialTheme.colorScheme.inverseOnSurface,
-                    modifier = Modifier.padding(8.dp).align(Alignment.TopEnd)
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .align(Alignment.TopEnd)
                 )
             }
         }
