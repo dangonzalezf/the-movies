@@ -75,6 +75,7 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.squareup.converter.kotlinx.serialization)
     implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.constraintlayout)
     ksp(libs.androidx.room.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

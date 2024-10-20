@@ -18,6 +18,9 @@ import com.example.themoviedbapp.data.datasource.MoviesRemoteDataSource
 import com.example.themoviedbapp.data.datasource.RegionDataSource
 import com.example.themoviedbapp.screen.detail.DetailScreen
 import com.example.themoviedbapp.screen.home.HomeScreen
+import com.example.themoviedbapp.usecases.FetchMoviesUseCase
+import com.example.themoviedbapp.usecases.FindMovieByIdUseCase
+import com.example.themoviedbapp.usecases.ToggleFavoriteUseCase
 import com.example.themoviedbapp.viewmodel.DetailViewModel
 import com.example.themoviedbapp.viewmodel.HomeViewModel
 
@@ -48,7 +51,7 @@ fun Navigation() {
                 onClick = { movie ->
                     navController.navigate(NavScreen.Detail.createRoute(movie.id))
                 },
-                vm = viewModel { HomeViewModel(moviesRepository) }
+                vm = viewModel { HomeViewModel(fetchMoviesUseCase = FetchMoviesUseCase(moviesRepository)) }
             )
         }
         composable(
@@ -58,7 +61,11 @@ fun Navigation() {
             val movieId = requireNotNull(backStackEntry.arguments?.getInt(NavArgs.MovieId.key))
             DetailScreen(
                 vm = viewModel {
-                    DetailViewModel(movieId, moviesRepository)
+                    DetailViewModel(
+                        movieId,
+                        FindMovieByIdUseCase(moviesRepository),
+                        ToggleFavoriteUseCase(moviesRepository)
+                    )
                 },
                 onBack = { navController.popBackStack() }
             )
