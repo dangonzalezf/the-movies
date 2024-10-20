@@ -18,7 +18,6 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -30,15 +29,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
-import com.example.themoviedbapp.data.Movie
+import com.example.themoviedbapp.domain.Movie
 import com.example.themoviedbapp.R
 import com.example.themoviedbapp.common.AcScaffold
 import com.example.themoviedbapp.common.PermissionRequestEffect
-import com.example.themoviedbapp.screen.LoadingIndicator
 import com.example.themoviedbapp.screen.Screen
-import com.example.themoviedbapp.stateAsResultIn
 import com.example.themoviedbapp.viewmodel.HomeViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)

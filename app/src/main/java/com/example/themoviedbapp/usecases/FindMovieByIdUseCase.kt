@@ -1,6 +1,6 @@
 package com.example.themoviedbapp.usecases
 
-import com.example.themoviedbapp.data.Movie
+import com.example.themoviedbapp.domain.Movie
 import com.example.themoviedbapp.data.MoviesRepository
 import kotlinx.coroutines.flow.Flow
 

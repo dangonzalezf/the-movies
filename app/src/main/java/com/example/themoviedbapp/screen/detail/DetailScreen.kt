@@ -33,7 +33,7 @@ import coil.compose.AsyncImage
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.themoviedbapp.R
 import com.example.themoviedbapp.common.AcScaffold
-import com.example.themoviedbapp.data.Movie
+import com.example.themoviedbapp.domain.Movie
 import com.example.themoviedbapp.screen.Property
 import com.example.themoviedbapp.screen.Screen
 import com.example.themoviedbapp.viewmodel.DetailViewModel

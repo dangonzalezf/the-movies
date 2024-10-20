@@ -7,7 +7,7 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import com.example.themoviedbapp.Result
-import com.example.themoviedbapp.data.Movie
+import com.example.themoviedbapp.domain.Movie
 
 /**
  * This class is an state holder of ui created

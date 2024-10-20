@@ -3,7 +3,7 @@ package com.example.themoviedbapp.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.themoviedbapp.Result
-import com.example.themoviedbapp.data.Movie
+import com.example.themoviedbapp.domain.Movie
 import com.example.themoviedbapp.ifSuccess
 import com.example.themoviedbapp.stateAsResultIn
 import com.example.themoviedbapp.usecases.FindMovieByIdUseCase

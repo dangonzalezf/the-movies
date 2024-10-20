@@ -7,12 +7,20 @@ import com.example.themoviedbapp.common.getFromLocationCompat
 
 const val DEFAULT_REGION = "US"
 
-class RegionDataSource(private val app: Application, private val locationDataSource: LocationDataSource) {
+interface RegionDataSource {
+    suspend fun findLastRegion(): String
 
-    private val geocoder = Geocoder(app)
-    suspend fun findLastRegion(): String = locationDataSource.lastLocation()?.toRegion() ?: DEFAULT_REGION
+    suspend fun Location.toRegion(): String
+}
 
-    private suspend fun Location.toRegion(): String {
+class GeocoderRegionDataSource(
+    private val geocoder: Geocoder,
+    private val locationDataSource: LocationDataSource
+) : RegionDataSource {
+
+    override suspend fun findLastRegion(): String = locationDataSource.lastLocation()?.toRegion() ?: DEFAULT_REGION
+
+    override suspend fun Location.toRegion(): String {
         val addresses = geocoder.getFromLocationCompat(latitude, longitude, 1)
         val region = addresses.firstOrNull()?.countryCode
         return region ?: DEFAULT_REGION

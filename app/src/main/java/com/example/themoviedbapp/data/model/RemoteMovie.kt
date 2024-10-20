@@ -1,6 +1,5 @@
 package com.example.themoviedbapp.data.model
 
-import com.example.themoviedbapp.data.Movie
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

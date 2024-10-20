@@ -2,6 +2,7 @@ package com.example.themoviedbapp.data
 
 import com.example.themoviedbapp.data.datasource.MoviesLocalDataSource
 import com.example.themoviedbapp.data.datasource.MoviesRemoteDataSource
+import com.example.themoviedbapp.domain.Movie
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.onEach

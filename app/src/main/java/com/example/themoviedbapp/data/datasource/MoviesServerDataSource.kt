@@ -1,20 +1,27 @@
 package com.example.themoviedbapp.data.datasource
 
-import com.example.themoviedbapp.data.Movie
+import com.example.themoviedbapp.domain.Movie
 import com.example.themoviedbapp.data.remote.MoviesClient
 import com.example.themoviedbapp.data.model.RemoteMovie
+import com.example.themoviedbapp.data.remote.MoviesService
 
-class MoviesRemoteDataSource {
+interface MoviesRemoteDataSource {
+    suspend fun fetchPopularMovies(region: String): List<Movie>
 
-    suspend fun fetchPopularMovies(region: String): List<Movie> =
-        MoviesClient
-            .instance
+    suspend fun fetchMovieById(id: Int): Movie
+}
+
+class MoviesServerDataSource(
+    private val moviesService: MoviesService
+) : MoviesRemoteDataSource {
+
+    override suspend fun fetchPopularMovies(region: String): List<Movie> =
+        moviesService
             .fetchPopularMovies(region)
             .remoteMovies.map { it.toDomainModel() }
 
-    suspend fun fetchMovieById(id: Int): Movie =
-        MoviesClient
-            .instance
+    override suspend fun fetchMovieById(id: Int): Movie =
+        moviesService
             .fetchMovieById(id)
             .toDomainModel()
 }
