@@ -1,19 +1,11 @@
-package com.example.themoviedbapp.data.datasource
+package com.example.themoviedbapp.framework
 
-import com.example.themoviedbapp.data.database.DBMovie
+import com.example.themoviedbapp.data.datasource.MoviesLocalDataSource
 import com.example.themoviedbapp.domain.Movie
-import com.example.themoviedbapp.data.database.MoviesDao
+import com.example.themoviedbapp.framework.database.DBMovie
+import com.example.themoviedbapp.framework.database.MoviesDao
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-
-interface MoviesLocalDataSource {
-    val movies: Flow<List<Movie>>
-    fun findMovieById(id: Int): Flow<Movie?>
-
-    suspend fun isEmpty(): Boolean
-
-    suspend fun saveMovies(movies: List<Movie>)
-}
 
 class MoviesRoomDataSource(private val moviesDao: MoviesDao) : MoviesLocalDataSource {
 

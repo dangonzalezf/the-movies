@@ -1,10 +1,9 @@
-package com.example.themoviedbapp.data.database
+package com.example.themoviedbapp.framework.database
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.themoviedbapp.domain.Movie
 import kotlinx.coroutines.flow.Flow
 
 @Dao

@@ -1,6 +1,5 @@
 package com.example.themoviedbapp.screen
 
-import android.app.Application
 import android.location.Geocoder
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
@@ -13,16 +12,11 @@ import androidx.navigation.navArgument
 import com.example.themoviedbapp.App
 import com.example.themoviedbapp.data.MoviesRepository
 import com.example.themoviedbapp.data.RegionRepository
-import com.example.themoviedbapp.data.datasource.GeocoderRegionDataSource
-import com.example.themoviedbapp.data.datasource.LocationDataSource
-import com.example.themoviedbapp.data.datasource.MoviesLocalDataSource
-import com.example.themoviedbapp.data.datasource.MoviesRemoteDataSource
-import com.example.themoviedbapp.data.datasource.MoviesRoomDataSource
-import com.example.themoviedbapp.data.datasource.MoviesServerDataSource
 import com.example.themoviedbapp.data.datasource.PlayServiceLocationDataSource
-import com.example.themoviedbapp.data.datasource.RegionDataSource
-import com.example.themoviedbapp.data.remote.MoviesClient
-import com.example.themoviedbapp.data.remote.MoviesService
+import com.example.themoviedbapp.framework.GeocoderRegionDataSource
+import com.example.themoviedbapp.framework.MoviesRoomDataSource
+import com.example.themoviedbapp.framework.MoviesServerDataSource
+import com.example.themoviedbapp.framework.remote.MoviesClient
 import com.example.themoviedbapp.screen.detail.DetailScreen
 import com.example.themoviedbapp.screen.home.HomeScreen
 import com.example.themoviedbapp.usecases.FetchMoviesUseCase
@@ -30,7 +24,6 @@ import com.example.themoviedbapp.usecases.FindMovieByIdUseCase
 import com.example.themoviedbapp.usecases.ToggleFavoriteUseCase
 import com.example.themoviedbapp.viewmodel.DetailViewModel
 import com.example.themoviedbapp.viewmodel.HomeViewModel
-import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 
 sealed class NavScreen(val route: String) {

@@ -1,4 +1,4 @@
-package com.example.themoviedbapp.data.database
+package com.example.themoviedbapp.framework.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

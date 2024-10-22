@@ -2,7 +2,7 @@ package com.example.themoviedbapp
 
 import android.app.Application
 import androidx.room.Room
-import com.example.themoviedbapp.data.database.MoviesDataBase
+import com.example.themoviedbapp.framework.database.MoviesDataBase
 
 class App : Application() {
 
