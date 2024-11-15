@@ -12,10 +12,10 @@ import androidx.navigation.navArgument
 import com.example.themoviedbapp.App
 import com.example.themoviedbapp.data.MoviesRepository
 import com.example.themoviedbapp.data.RegionRepository
-import com.example.themoviedbapp.data.datasource.PlayServiceLocationDataSource
 import com.example.themoviedbapp.framework.GeocoderRegionDataSource
 import com.example.themoviedbapp.framework.MoviesRoomDataSource
 import com.example.themoviedbapp.framework.MoviesServerDataSource
+import com.example.themoviedbapp.framework.PlayServiceLocationDataSource
 import com.example.themoviedbapp.framework.remote.MoviesClient
 import com.example.themoviedbapp.screen.detail.DetailScreen
 import com.example.themoviedbapp.screen.home.HomeScreen
@@ -43,14 +43,14 @@ fun Navigation() {
     val navController = rememberNavController()
     val app = LocalContext.current.applicationContext as App
     val moviesRepository = MoviesRepository(
-        RegionRepository(
+        regionRepository = RegionRepository(
             GeocoderRegionDataSource(
                 Geocoder(app),
                 PlayServiceLocationDataSource(LocationServices.getFusedLocationProviderClient(app))
             )
         ),
-        MoviesRoomDataSource(app.db.moviesDao()),
-        MoviesServerDataSource(MoviesClient.instance)
+        localDataSource = MoviesRoomDataSource(app.db.moviesDao()),
+        remoteDataSource = MoviesServerDataSource(MoviesClient.instance)
     )
     NavHost(navController = navController, startDestination = NavScreen.Home.route) {
         composable(route = NavScreen.Home.route) {

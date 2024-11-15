@@ -17,6 +17,9 @@ squareupConverterKotlinxSerialization = "2.11.0"
 roomKtx = "2.6.1"
 ksp = "2.0.0-1.0.21"
 constraintlayout = "2.1.4"
+jetbrainsKotlinJvm = "2.0.0"
+appcompat = "1.6.1"
+material = "1.10.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -42,6 +45,8 @@ squareup-converter-kotlinx-serialization = { module = "com.squareup.retrofit2:co
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomKtx" }
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomKtx" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -49,4 +54,6 @@ jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "k
 kotlinxSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
+android-library = { id = "com.android.library", version.ref = "agp" }
 

@@ -1,6 +1,6 @@
 package com.example.themoviedbapp.data.datasource
 
-import android.location.Location
+import com.example.themoviedbapp.domain.Location
 
 interface RegionDataSource {
     suspend fun findLastRegion(): String

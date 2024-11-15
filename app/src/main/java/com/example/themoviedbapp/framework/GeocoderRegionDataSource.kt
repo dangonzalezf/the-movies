@@ -1,10 +1,10 @@
 package com.example.themoviedbapp.framework
 
 import android.location.Geocoder
-import android.location.Location
 import com.example.themoviedbapp.common.getFromLocationCompat
 import com.example.themoviedbapp.data.datasource.LocationDataSource
 import com.example.themoviedbapp.data.datasource.RegionDataSource
+import com.example.themoviedbapp.domain.Location
 
 class GeocoderRegionDataSource(
     private val geocoder: Geocoder,
