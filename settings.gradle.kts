@@ -1,8 +1,5 @@
 @file:Suppress("UnstableApiUsage")
 
-include(":data")
-
-
 pluginManagement {
     repositories {
         google {
@@ -25,5 +22,16 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "TheMovieDBApp"
+
 include(":app")
-include(":domain")
+
+include(":domain:movie")
+include(":domain:region")
+
+include(":framework:core")
+include(":framework:movie")
+include(":framework:region")
+
+include(":feature:common")
+include(":feature:detail")
+include(":feature:home")

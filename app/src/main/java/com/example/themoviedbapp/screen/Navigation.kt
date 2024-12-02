@@ -10,20 +10,21 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.themoviedbapp.App
-import com.example.themoviedbapp.data.MoviesRepository
-import com.example.themoviedbapp.data.RegionRepository
-import com.example.themoviedbapp.framework.GeocoderRegionDataSource
-import com.example.themoviedbapp.framework.MoviesRoomDataSource
-import com.example.themoviedbapp.framework.MoviesServerDataSource
-import com.example.themoviedbapp.framework.PlayServiceLocationDataSource
-import com.example.themoviedbapp.framework.remote.MoviesClient
-import com.example.themoviedbapp.screen.detail.DetailScreen
-import com.example.themoviedbapp.screen.home.HomeScreen
-import com.example.themoviedbapp.usecases.FetchMoviesUseCase
-import com.example.themoviedbapp.usecases.FindMovieByIdUseCase
-import com.example.themoviedbapp.usecases.ToggleFavoriteUseCase
-import com.example.themoviedbapp.viewmodel.DetailViewModel
-import com.example.themoviedbapp.viewmodel.HomeViewModel
+import com.example.themoviedbapp.BuildConfig
+import com.example.themoviedbapp.domain.movie.datasource.MoviesRepository
+import com.example.themoviedbapp.domain.movie.usecases.FetchMoviesUseCase
+import com.example.themoviedbapp.domain.movie.usecases.FindMovieByIdUseCase
+import com.example.themoviedbapp.domain.movie.usecases.ToggleFavoriteUseCase
+import com.example.themoviedbapp.domain.region.data.RegionRepository
+import com.example.themoviedbapp.feature.detail.DetailScreen
+import com.example.themoviedbapp.feature.detail.DetailViewModel
+import com.example.themoviedbapp.feature.home.HomeScreen
+import com.example.themoviedbapp.feature.home.HomeViewModel
+import com.example.themoviedbapp.framework.core.MoviesClient
+import com.example.themoviedbapp.framework.movie.database.MoviesRoomDataSource
+import com.example.themoviedbapp.framework.movie.network.MoviesServerDataSource
+import com.example.themoviedbapp.framework.region.GeocoderRegionDataSource
+import com.example.themoviedbapp.framework.region.PlayServiceLocationDataSource
 import com.google.android.gms.location.LocationServices
 
 sealed class NavScreen(val route: String) {
@@ -50,7 +51,7 @@ fun Navigation() {
             )
         ),
         localDataSource = MoviesRoomDataSource(app.db.moviesDao()),
-        remoteDataSource = MoviesServerDataSource(MoviesClient.instance)
+        remoteDataSource = MoviesServerDataSource(moviesService = MoviesClient(BuildConfig.TMDB_API_KEY).instance)
     )
     NavHost(navController = navController, startDestination = NavScreen.Home.route) {
         composable(route = NavScreen.Home.route) {
@@ -58,7 +59,13 @@ fun Navigation() {
                 onClick = { movie ->
                     navController.navigate(NavScreen.Detail.createRoute(movie.id))
                 },
-                vm = viewModel { HomeViewModel(fetchMoviesUseCase = FetchMoviesUseCase(moviesRepository)) }
+                vm = viewModel {
+                    HomeViewModel(
+                        fetchMoviesUseCase = FetchMoviesUseCase(
+                            moviesRepository
+                        )
+                    )
+                }
             )
         }
         composable(
