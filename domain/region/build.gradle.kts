@@ -1,6 +1,6 @@
 plugins {
-    id("java-library")
-    alias(libs.plugins.jetbrains.kotlin.jvm)
+    id("themoviedbapp.android.library.jvm")
+    //id("themoviedbapp.di.library")
 }
 
 java {

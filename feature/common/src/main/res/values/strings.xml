@@ -1,5 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <resources>
-    <string name="app_name">TheMovieDBApp</string>
+    <string name="app_name">The Movie DB App</string>
     <string name="back">Go Back</string>
     <string name="favorite_button">Add to favorites</string>
     <string name="error">Error</string>
