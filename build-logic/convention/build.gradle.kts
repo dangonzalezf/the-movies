@@ -39,11 +39,6 @@ gradlePlugin {
             implementationClass = "AndroidRoomConventionPlugin"
         }
 
-        register("diLibraryCompose") {
-            id = "themoviedbapp.android.library.di.compose"
-            implementationClass = "DiLibraryComposeConventionPlugin"
-        }
-
         register("jvmLibrary") {
             id = "themoviedbapp.android.library.jvm"
             implementationClass = "JvmLibraryConventionPlugin"
@@ -54,9 +49,14 @@ gradlePlugin {
             implementationClass = "JvmRetrofitConventionPlugin"
         }
 
-        //register("diLibrary") {
-            //id = "themoviedbapp.di.library"
-            //implementationClass = "DILibraryConventionPlugin"
-        //}
+        register("diLibrary") {
+            id = "themoviedbapp.di.library"
+            implementationClass = "DILibraryConventionPlugin"
+        }
+
+        register("diLibraryCompose") {
+            id = "themoviedbapp.android.library.di.compose"
+            implementationClass = "DiLibraryComposeConventionPlugin"
+        }
     }
 }

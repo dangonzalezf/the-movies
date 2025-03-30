@@ -1,6 +1,6 @@
 plugins {
     id("themoviedbapp.android.feature")
-    //id("themoviedbapp.android.library.di.compose")
+    id("themoviedbapp.android.library.di.compose")
 }
 
 android {

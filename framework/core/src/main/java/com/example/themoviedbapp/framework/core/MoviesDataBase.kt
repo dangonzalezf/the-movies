@@ -6,6 +6,6 @@ import com.example.themoviedbapp.framework.movie.database.DBMovie
 import com.example.themoviedbapp.framework.movie.database.MoviesDao
 
 @Database(entities = [DBMovie::class], version = 1, exportSchema = false)
-abstract class MoviesDataBase: RoomDatabase() {
+internal abstract class MoviesDataBase: RoomDatabase() {
     abstract fun moviesDao(): MoviesDao
 }

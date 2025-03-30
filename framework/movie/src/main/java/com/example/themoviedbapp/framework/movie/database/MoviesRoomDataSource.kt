@@ -1,11 +1,11 @@
 package com.example.themoviedbapp.framework.movie.database
 
-import com.example.themoviedbapp.domain.movie.datasource.MoviesLocalDataSource
+import com.example.themoviedbapp.domain.movie.data.MoviesLocalDataSource
 import com.example.themoviedbapp.domain.movie.entities.Movie
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class MoviesRoomDataSource(private val moviesDao: MoviesDao) : MoviesLocalDataSource {
+internal class MoviesRoomDataSource(private val moviesDao: MoviesDao) : MoviesLocalDataSource {
 
     override val movies: Flow<List<Movie>> =
         moviesDao.fetchPopularMovies().map { movies -> movies.map { it.toDomainModel() } }

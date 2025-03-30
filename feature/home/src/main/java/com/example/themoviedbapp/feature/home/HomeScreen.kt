@@ -34,13 +34,14 @@ import com.example.themoviedbapp.domain.movie.entities.Movie
 import com.example.themoviedbapp.feature.common.AcScaffold
 import com.example.themoviedbapp.feature.common.PermissionRequestEffect
 import com.example.themoviedbapp.feature.common.Screen
+import org.koin.androidx.compose.koinViewModel
 import com.example.themoviedbapp.feature.common.R as CommonR
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     onClick: (Movie) -> Unit,
-    vm: HomeViewModel
+    vm: HomeViewModel = koinViewModel()
 ) {
 
     val homeState = rememberHomeState()

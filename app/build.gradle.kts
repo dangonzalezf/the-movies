@@ -6,7 +6,7 @@ plugins {
     alias(libs.plugins.compose.compiler)
     id("themoviedbapp.android.application")
     id("themoviedbapp.android.application.compose")
-    //id("themoviedbapp.android.library.di.compose")
+    id("themoviedbapp.android.library.di.compose")
 }
 
 android {

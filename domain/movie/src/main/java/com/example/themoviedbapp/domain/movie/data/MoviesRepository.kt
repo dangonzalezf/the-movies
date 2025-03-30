@@ -1,4 +1,4 @@
-package com.example.themoviedbapp.domain.movie.datasource
+package com.example.themoviedbapp.domain.movie.data
 
 import com.example.themoviedbapp.domain.movie.entities.Movie
 import com.example.themoviedbapp.domain.region.data.RegionRepository

@@ -1,9 +1,9 @@
 package com.example.themoviedbapp.framework.movie.network
 
-import com.example.themoviedbapp.domain.movie.datasource.MoviesRemoteDataSource
+import com.example.themoviedbapp.domain.movie.data.MoviesRemoteDataSource
 import com.example.themoviedbapp.domain.movie.entities.Movie
 
-class MoviesServerDataSource(private val moviesService: MoviesService) : MoviesRemoteDataSource {
+internal class MoviesServerDataSource(private val moviesService: MoviesService) : MoviesRemoteDataSource {
 
     override suspend fun fetchPopularMovies(region: String): List<Movie> =
         moviesService
