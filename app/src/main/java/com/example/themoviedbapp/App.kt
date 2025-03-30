@@ -1,12 +1,13 @@
 package com.example.themoviedbapp
 
 import android.app.Application
-import com.example.themoviedbapp.domain.movie.domainMovieModule
-import com.example.themoviedbapp.domain.region.domainRegionModule
-import com.example.themoviedbapp.feature.detail.featureDetailModule
-import com.example.themoviedbapp.feature.home.featureHomeModule
+import com.example.themoviedbapp.domain.movie.DomainMovieModule
+import com.example.themoviedbapp.domain.region.DomainRegionModule
+import com.example.themoviedbapp.feature.detail.FeatureDetailModule
+import com.example.themoviedbapp.feature.home.FeatureHomeModule
 import com.example.themoviedbapp.framework.core.frameworkCoreModule
-import com.example.themoviedbapp.framework.movie.frameworkMovieModule
+import com.example.themoviedbapp.framework.movie.FrameworkMovieModule
+import com.example.themoviedbapp.framework.region.FrameworkRegionModule
 import com.example.themoviedbapp.framework.region.frameworkRegionModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -14,6 +15,7 @@ import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
+import org.koin.ksp.generated.module
 
 class App : Application() {
 
@@ -25,13 +27,14 @@ class App : Application() {
             androidContext(this@App)
             modules(
                 appModule,
-                domainMovieModule,
-                domainRegionModule,
-                featureDetailModule,
-                featureHomeModule,
+                FeatureHomeModule().module,
+                FeatureDetailModule().module,
+                DomainMovieModule().module,
+                DomainRegionModule().module,
                 frameworkCoreModule,
-                frameworkMovieModule,
+                FrameworkMovieModule().module,
                 frameworkRegionModule,
+                FrameworkRegionModule().module
             )
         }
     }

@@ -10,7 +10,9 @@ import com.example.themoviedbapp.domain.movie.usecases.FindMovieByIdUseCase
 import com.example.themoviedbapp.domain.movie.usecases.ToggleFavoriteUseCase
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import org.koin.android.annotation.KoinViewModel
 
+@KoinViewModel
 class DetailViewModel(
     movieId: Int,
     findMovieByIdUseCase: FindMovieByIdUseCase,

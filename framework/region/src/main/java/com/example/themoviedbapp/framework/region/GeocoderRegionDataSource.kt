@@ -4,8 +4,10 @@ import android.location.Geocoder
 import com.example.themoviedbapp.domain.region.data.LocationDataSource
 import com.example.themoviedbapp.domain.region.data.RegionDataSource
 import com.example.themoviedbapp.domain.region.entities.Location
+import org.koin.core.annotation.Factory
 
-class GeocoderRegionDataSource(
+@Factory
+internal class GeocoderRegionDataSource(
     private val geocoder: Geocoder,
     private val locationDataSource: LocationDataSource
 ) : RegionDataSource {
