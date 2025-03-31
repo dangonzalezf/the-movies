@@ -2,12 +2,11 @@ package com.example.themoviedbapp.framework.movie.database
 
 import com.example.themoviedbapp.domain.movie.data.MoviesLocalDataSource
 import com.example.themoviedbapp.domain.movie.entities.Movie
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import org.koin.core.annotation.Factory
 
-@Factory
-internal class MoviesRoomDataSource(private val moviesDao: MoviesDao) : MoviesLocalDataSource {
+internal class MoviesRoomDataSource @Inject constructor(private val moviesDao: MoviesDao) : MoviesLocalDataSource {
 
     override val movies: Flow<List<Movie>> =
         moviesDao.fetchPopularMovies().map { movies -> movies.map { it.toDomainModel() } }

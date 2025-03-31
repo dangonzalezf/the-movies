@@ -2,10 +2,9 @@ package com.example.themoviedbapp.domain.movie.usecases
 
 import com.example.themoviedbapp.domain.movie.data.MoviesRepository
 import com.example.themoviedbapp.domain.movie.entities.Movie
-import org.koin.core.annotation.Factory
+import javax.inject.Inject
 
-@Factory
-class ToggleFavoriteUseCase(private val moviesRepository: MoviesRepository) {
+class ToggleFavoriteUseCase @Inject constructor(private val moviesRepository: MoviesRepository) {
     suspend operator fun invoke(movie: Movie) {
         moviesRepository.toggleFavorite(movie)
     }

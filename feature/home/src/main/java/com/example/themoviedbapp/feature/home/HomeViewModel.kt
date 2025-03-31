@@ -6,16 +6,17 @@ import com.example.themoviedbapp.feature.common.Result
 import com.example.themoviedbapp.domain.movie.entities.Movie
 import com.example.themoviedbapp.feature.common.stateAsResultIn
 import com.example.themoviedbapp.domain.movie.usecases.FetchMoviesUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flatMapLatest
-import org.koin.android.annotation.KoinViewModel
 
 @OptIn(ExperimentalCoroutinesApi::class)
-@KoinViewModel
-class HomeViewModel(private val fetchMoviesUseCase: FetchMoviesUseCase) : ViewModel() {
+@HiltViewModel
+class HomeViewModel @Inject constructor(private val fetchMoviesUseCase: FetchMoviesUseCase) : ViewModel() {
 
     private val uiReady = MutableStateFlow(false)
 

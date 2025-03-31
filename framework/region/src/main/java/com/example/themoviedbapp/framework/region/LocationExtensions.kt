@@ -10,8 +10,6 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
 import kotlin.coroutines.resume
 
-
-
 @Suppress("DEPRECATION")
 suspend fun Geocoder.getFromLocationCompat(
     @FloatRange(from = -90.0, to = 90.0) latitude: Double,

@@ -8,13 +8,15 @@ import com.example.themoviedbapp.feature.common.ifSuccess
 import com.example.themoviedbapp.feature.common.stateAsResultIn
 import com.example.themoviedbapp.domain.movie.usecases.FindMovieByIdUseCase
 import com.example.themoviedbapp.domain.movie.usecases.ToggleFavoriteUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
+import javax.inject.Named
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import org.koin.android.annotation.KoinViewModel
 
-@KoinViewModel
-class DetailViewModel(
-    movieId: Int,
+@HiltViewModel
+class DetailViewModel @Inject constructor(
+    @Named("movieId") movieId: Int,
     findMovieByIdUseCase: FindMovieByIdUseCase,
     private val toggleFavoriteUseCase: ToggleFavoriteUseCase
 ) : ViewModel() {

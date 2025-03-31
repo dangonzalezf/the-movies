@@ -4,12 +4,11 @@ import android.annotation.SuppressLint
 import android.location.Location
 import com.example.themoviedbapp.domain.region.data.LocationDataSource
 import com.google.android.gms.location.FusedLocationProviderClient
+import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlinx.coroutines.suspendCancellableCoroutine
-import org.koin.core.annotation.Factory
 
-@Factory
-internal class PlayServiceLocationDataSource(
+internal class PlayServiceLocationDataSource @Inject constructor(
     private val fusedLocationClient: FusedLocationProviderClient
 ) : LocationDataSource {
     override suspend fun findLastLocation(): com.example.themoviedbapp.domain.region.entities.Location? = fusedLocationClient.lastLocation()
