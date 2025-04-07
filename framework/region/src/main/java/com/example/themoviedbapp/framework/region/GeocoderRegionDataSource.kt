@@ -1,6 +1,7 @@
 package com.example.themoviedbapp.framework.region
 
 import android.location.Geocoder
+import com.example.themoviedbapp.domain.region.data.DEFAULT_REGION
 import com.example.themoviedbapp.domain.region.data.LocationDataSource
 import com.example.themoviedbapp.domain.region.data.RegionDataSource
 import com.example.themoviedbapp.domain.region.entities.Location
@@ -10,10 +11,6 @@ internal class GeocoderRegionDataSource @Inject constructor(
     private val geocoder: Geocoder,
     private val locationDataSource: LocationDataSource
 ) : RegionDataSource {
-
-    companion object {
-        const val DEFAULT_REGION = "US"
-    }
 
     override suspend fun findLastRegion(): String = locationDataSource.findLastLocation()?.toRegion() ?: DEFAULT_REGION
 
