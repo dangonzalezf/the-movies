@@ -1,4 +1,4 @@
-package com.example.themoviedbapp.domain.movie.usecases
+package com.example.themoviedbapp
 
 import com.example.themoviedbapp.domain.movie.entities.Movie
 

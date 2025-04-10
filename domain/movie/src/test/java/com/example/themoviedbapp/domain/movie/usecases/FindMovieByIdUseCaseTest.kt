@@ -1,5 +1,6 @@
 package com.example.themoviedbapp.domain.movie.usecases
 
+import com.example.themoviedbapp.sampleMovie
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.flow.flowOf
 import org.junit.Test

@@ -1,9 +1,9 @@
 package com.example.themoviedbapp.domain.movie.data
 
-import com.example.themoviedbapp.domain.movie.usecases.sampleMovie
-import com.example.themoviedbapp.domain.movie.usecases.sampleMovies
 import com.example.themoviedbapp.domain.region.data.DEFAULT_REGION
 import com.example.themoviedbapp.domain.region.data.RegionRepository
+import com.example.themoviedbapp.sampleMovie
+import com.example.themoviedbapp.sampleMovies
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
