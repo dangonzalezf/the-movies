@@ -1,6 +1,7 @@
 package com.example.themoviedbapp.domain.movie.usecases
 
 import com.example.themoviedbapp.domain.movie.data.MoviesRepository
+import com.example.themoviedbapp.sampleMovie
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import org.mockito.Mockito.mock

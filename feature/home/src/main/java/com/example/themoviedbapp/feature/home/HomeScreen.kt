@@ -36,21 +36,30 @@ import com.example.themoviedbapp.feature.common.AcScaffold
 import com.example.themoviedbapp.feature.common.PermissionRequestEffect
 import com.example.themoviedbapp.feature.common.Screen
 import com.example.themoviedbapp.feature.common.R as CommonR
+import com.example.themoviedbapp.feature.common.Result
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     onClick: (Movie) -> Unit,
     vm: HomeViewModel = hiltViewModel()
 ) {
+    val state by vm.state.collectAsState()
 
-    val homeState = rememberHomeState()
+    HomeScreen(onClick = onClick, state = state)
+
     PermissionRequestEffect(permission = Manifest.permission.ACCESS_COARSE_LOCATION) {
         vm.onUiReady()
     }
+}
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun HomeScreen(
+    onClick: (Movie) -> Unit,
+    state: Result<List<Movie>>,
+) {
+    val homeState = rememberHomeState()
     Screen {
-        val state by vm.state.collectAsState()
         AcScaffold(
             state = state,
             topBar = {
@@ -92,7 +101,7 @@ fun MovieItem(movie: Movie, onClick: () -> Unit) {
                     .aspectRatio(2 / 3f)
                     .clip(MaterialTheme.shapes.small)
             )
-            if(movie.favorite) {
+            if (movie.favorite) {
                 Icon(
                     imageVector = Icons.Default.Favorite,
                     contentDescription = stringResource(id = CommonR.string.favorite_button),

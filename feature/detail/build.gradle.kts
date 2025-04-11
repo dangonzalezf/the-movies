@@ -9,4 +9,5 @@ android {
 
 dependencies {
     implementation(project(":domain:movie"))
+    androidTestImplementation(project(":test:unit"))
 }

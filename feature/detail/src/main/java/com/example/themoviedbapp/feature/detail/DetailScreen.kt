@@ -26,21 +26,44 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
+import com.example.themoviedbapp.domain.movie.entities.Movie
 import com.example.themoviedbapp.feature.common.AcScaffold
 import com.example.themoviedbapp.feature.common.Property
+import com.example.themoviedbapp.feature.common.Result
 import com.example.themoviedbapp.feature.common.Screen
 import com.example.themoviedbapp.feature.common.R as CommonR
 
+const val FAVORITE_BUTTON_TAG = "favoriteButton"
+const val BACK_BUTTON_TAG = "topBarBackButton"
+
+@Composable
+fun  DetailScreen(
+    vm: DetailViewModel = hiltViewModel(),
+    onBack: () -> Unit
+) {
+    val state by vm.state.collectAsState()
+
+    DetailScreen(
+        state = state,
+        onBack = onBack,
+        onFavoriteClicked = vm::onFavoriteClick
+    )
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailScreen(vm: DetailViewModel = hiltViewModel(), onBack: () -> Unit) {
+fun DetailScreen(
+    state: Result<Movie>,
+    onBack: () -> Unit,
+    onFavoriteClicked: () -> Unit
+) {
 
-    val state by vm.state.collectAsState()
     val detailState = rememberDetailState(state)
 
     Screen {
@@ -55,7 +78,7 @@ fun DetailScreen(vm: DetailViewModel = hiltViewModel(), onBack: () -> Unit) {
             },
             floatingActionButton = {
                 val favorite = detailState.movie?.favorite ?: false
-                FloatingActionButton(onClick = { vm.onFavoriteClick() }) {
+                FloatingActionButton(onClick = { onFavoriteClicked() }, modifier = Modifier.testTag(FAVORITE_BUTTON_TAG)) {
                     Icon(
                         imageVector = if (favorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                         contentDescription = stringResource(id = CommonR.string.favorite_button)
@@ -80,7 +103,7 @@ private fun DetailTopBar(
     TopAppBar(
         title = { Text(text = title) },
         navigationIcon = {
-            IconButton(onClick = onBack) {
+            IconButton(onClick = onBack, modifier = Modifier.testTag(BACK_BUTTON_TAG)) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Default.ArrowBack,
                     contentDescription = stringResource(id = CommonR.string.back)

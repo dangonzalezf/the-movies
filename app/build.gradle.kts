@@ -17,7 +17,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.example.themoviedbapp.di.HiltTestRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -44,6 +44,14 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
+    configurations.all {
+        resolutionStrategy {
+            force("androidx.test.ext:junit:1.2.1")
+            force("androidx.test.espresso:espresso-core:3.6.1")
+            force("androidx.compose.ui:ui-test-junit4:1.6.4")
+        }
+    }
 }
 
 dependencies {
@@ -59,10 +67,8 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.play.services.location)
     implementation(libs.androidx.room.ktx)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    implementation(platform(libs.androidx.compose.bom))
-    //androidTestImplementation(libs.androidx.ui.test.junit4)
-    debugImplementation(libs.androidx.ui.test.manifest)
+    // test dependencies
+
+    androidTestImplementation(libs.hilt.android.testing)
+    kspAndroidTest(libs.hilt.compiler)
 }
