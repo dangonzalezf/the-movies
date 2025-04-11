@@ -9,7 +9,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.kotlinx.serialization.asConverterFactory
 import retrofit2.create
 
-internal class MoviesClient(private val apiKey: String) {
+internal class MoviesClient(private val apiKey: String, apiUrl: String) {
 
     private val okHttpClient = OkHttpClient.Builder()
         .addInterceptor(::apiKeyAsQuery)
@@ -21,7 +21,7 @@ internal class MoviesClient(private val apiKey: String) {
     }
 
     val instance = Retrofit.Builder()
-        .baseUrl("https://api.themoviedb.org/3/")
+        .baseUrl(apiUrl)
         .client(okHttpClient)
         .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
         .build()
