@@ -11,16 +11,25 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal object FrameworkCoreModule {
-
-    @Provides
-    @Singleton
-    fun providesDataBase(app: Application) = Room.databaseBuilder(app, MoviesDataBase::class.java, "movies-db").build()
+object FrameworkCoreModule {
 
     @Provides
     fun providesMoviesDao(dataBase: MoviesDataBase) = dataBase.moviesDao()
 
     @Provides
     @Singleton
-    fun providesMoviesClient(@Named("apiKey") apiKey: String) = MoviesClient(apiKey).instance
+    fun providesMoviesService(@Named("apiKey") apiKey: String) = MoviesClient(apiKey).instance
+
+    @Module
+    @InstallIn(SingletonComponent::class)
+    object FrameworkCoreExtrasModule {
+
+        @Provides
+        @Singleton
+        fun provideDataBase(app: Application) = Room.databaseBuilder(
+            app,
+            MoviesDataBase::class.java,
+            "movie-db"
+        ).build()
+    }
 }
