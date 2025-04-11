@@ -1,5 +1,8 @@
 @file:Suppress("UnstableApiUsage")
 
+include(":app:debug")
+
+
 include(":test:unit")
 
 
